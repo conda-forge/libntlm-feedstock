@@ -1,7 +1,8 @@
 {% set version = "1.4" %}
+{% set name = "libntlm" %}
 
 package:
-  name: libntlm
+  name: {{ name }}
   version: "{{ version }}"
 
 source:
@@ -10,25 +11,35 @@ source:
   md5: 54793488450e9085c57e0d859ff3bc8c
 
 build:
-  number: 0
+  number: 1
   # This package is a dependency of libhdfs3, which is primarily used with HDFS on Linux.
-  skip: True  # [not linux]
+  skip: True  # [win]
+
+requirements:
+  build:
+    - toolchain
 
 test:
   commands:
+    - conda inspect linkages {{ name }}
+    - conda inspect objects {{ name }}       # [osx]
     - test -f $PREFIX/include/ntlm.h
     - test -f $PREFIX/lib/libntlm.a
     - test -f $PREFIX/lib/libntlm.la
-    - test -f $PREFIX/lib/libntlm.so
-    - test -f $PREFIX/lib/libntlm.so.0
-    - test -f $PREFIX/lib/libntlm.so.0.0.19
+    - test -f $PREFIX/lib/libntlm.so          # [linux]
+    - test -f $PREFIX/lib/libntlm.so.0        # [linux]
+    - test -f $PREFIX/lib/libntlm.so.0.0.19   # [linux]
+    - test -f $PREFIX/lib/libntlm.dylib          # [osx]
+    - test -f $PREFIX/lib/libntlm.0.dylib        # [osx]
     - test -f $PREFIX/lib/pkgconfig/libntlm.pc
 
 about:
   home: http://www.nongnu.org/libntlm/
   license: LGPL-2.1
+  license_file: COPYING
   summary: Improved implementation of Microsoft's NTLM authentication
 
 extra:
   recipe-maintainers:
     - koverholt
+    - mariusvniekerk
