@@ -17,14 +17,13 @@ build:
 
 requirements:
   build:
+    - gnuconfig  # [unix]
     - {{ compiler('c') }}
     - make
   host:
 
 test:
   commands:
-    - conda inspect linkages {{ name }}
-    - conda inspect objects {{ name }}       # [osx]
     - test -f $PREFIX/include/ntlm.h
     - test -f $PREFIX/lib/libntlm.a
     - test -f $PREFIX/lib/libntlm.so          # [linux]
