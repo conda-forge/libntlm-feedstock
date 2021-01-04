@@ -17,14 +17,13 @@ build:
 
 requirements:
   build:
+    - gnuconfig  # [unix]
     - {{ compiler('c') }}
     - make
   host:
 
 test:
   commands:
-    - conda inspect linkages {{ name }}
-    - conda inspect objects {{ name }}       # [osx]
     - test -f $PREFIX/include/ntlm.h
     - test -f $PREFIX/lib/libntlm.a
     - test -f $PREFIX/lib/libntlm.so          # [linux]
@@ -36,7 +35,7 @@ test:
 
 about:
   home: http://www.nongnu.org/libntlm/
-  license: LGPL-2.1
+  license: LGPL-2.1-or-later
   license_file: COPYING
   summary: Improved implementation of Microsoft's NTLM authentication
 
