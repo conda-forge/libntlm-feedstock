@@ -1,19 +1,19 @@
-{% set version = "1.4" %}
+{% set version = "1.6" %}
 {% set name = "libntlm" %}
 
 package:
   name: {{ name }}
-  version: "{{ version }}"
+  version: {{ version }}
 
 source:
   fn: libntlm-{{ version }}.tar.gz
   url: http://www.nongnu.org/libntlm/releases/libntlm-{{ version }}.tar.gz
-  md5: 54793488450e9085c57e0d859ff3bc8c
+  md5: 9894aeb485fa27a481b270fce5055f1c
 
 build:
-  number: 1002
+  number: 0
   # This package is a dependency of libhdfs3, which is primarily used with HDFS on Linux.
-  skip: True  # [win]
+  skip: true  # [win]
 
 requirements:
   build:
